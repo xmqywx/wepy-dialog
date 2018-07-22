@@ -1,0 +1,17 @@
+{
+  "name": "wepy-dialog",
+  "version": "1.0.0",
+  "description": "a package for wepy",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "wepy",
+    "dialog",
+    "小程序",
+    "插件"
+  ],
+  "author": "lstrive",
+  "license": "ISC"
+}

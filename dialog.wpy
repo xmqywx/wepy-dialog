@@ -1,0 +1,188 @@
+<style lang="less">
+  #modal {
+    width: 630rpx;
+    min-height: 396rpx;
+    border-radius: 6rpx;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    padding-bottom: 108rpx;
+    box-sizing: border-box;
+    z-index: 999;
+  }
+  .close {
+    display: block;
+    width: 68rpx;
+    height: 68rpx;
+    padding: 40rpx;
+    margin: 0 auto;
+  }
+  .modal-main {
+    padding: 46rpx 48rpx 40rpx 48rpx;
+    box-sizing: border-box;
+    background-color: #fff;
+    border-radius: 13rpx;
+  }
+.modal-title {
+  font-size: 36rpx;
+  line-height: 44rpx;
+  color: #333;
+  text-align: center;
+  margin-bottom: 24rpx;
+}
+
+.modal-content {
+  color: #3b3f4f;
+  font-size: 32rpx;
+  line-height: 50rpx;
+  margin-bottom: 52rpx;
+  word-break: break-all;
+  -ms-word-break: break-all;
+}
+
+.modal-btn {
+  overflow: hidden;
+  width: 508rpx;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-around;
+}
+
+.modal-btn button {
+  flex: 1;
+  width: 244rpx; 
+  height: 80rpx;
+  border-radius: 0;
+  line-height: 80rpx;
+  // margin-top: 100rpx;
+}
+
+.modal-btn button:first-child {
+  background-color: #fff;
+  border: 1px solid #38f;
+  font-size: 30rpx;
+  color: #38f;
+  margin-right: 20rpx;
+}
+
+.modal-btn button:last-child {
+  background-color: #38f;
+  font-size: 30rpx;
+  color: #fff;
+}
+
+.modal-tip {
+  font-size: 26rpx;
+  line-height: 34rpx;
+  color: #89919b;
+  text-align: left;
+  margin-top: 14rpx;
+}
+</style>
+
+<template lang="pug">
+  view(class="mask" hidden="{{!maskShow}}")
+  view(id="modal" hidden="{{!modalShow}}")
+    view.modal-main
+      view(class="modal-title") {{title}}
+      view(class="modal-content") {{content}}
+      view(class="modal-btn")
+        button(class="modal-cancle" wx:if="{{cancel}}" @tap="cancel") {{cancelText}}
+        button(class="modal-confirm" open-type="openSetting" wx:if="{{confirm && type == 'openSetting'}}" bindopensetting="confirm") {{confirmText}}
+        button(class="modal-confirm" wx:if="{{confirm && type == 'userinfo'}}" bindopensetting="confirm") {{confirmText}}
+        button(class="modal-confirm" wx:if="{{confirm && !type}}" @tap="confirm") {{confirmText}}
+      view(wx:if="{{tip}}" class="modal-tip") {{tip}}
+    image(src="/images/close.png" class="close" @tap="hideModal")
+</template>
+
+<script>
+/**
+*modal组件参数
+{
+  title: 标题，简短
+  content: 主题内容，
+  cancel: 点击取消 function
+  confirm: 点击确定 function
+  tip: 底部提示内容
+  type: "按钮的类型"open-type
+}
+ */
+import wepy from "wepy";
+export default class Modal extends wepy.component {
+  data = {
+    modalShow: false,
+    title: "这是一个modal",
+    content: "这里是modal的主体内容",
+    cancel: "function(){}",
+    confirm: "function(){}",
+    cancelText: "取消",
+    confirmText: "确认",
+    tip: "这里是tip提示内容",
+    type: null,//确定按钮的类型(open-type)
+    maskShow: false,
+  }
+
+  props = {
+ 
+  }
+
+  methods = {
+    cancel: function () {
+      this.cancel && this.cancel();
+      this.hideModal();
+    },
+
+    confirm: function () {
+      this.confirm && this.confirm();
+      this.hideModal();
+    },
+
+    hideModal: function () {
+      this.maskShow = false;
+      this.modalShow = false;
+    }
+  }
+
+  showModal (modalData) {
+    this.modalShow = true;
+    this.maskShow = true;
+    this.confirmText = modalData.confirmText || "确认";
+    this.cancelText = modalData.cancelText || "取消";
+    this.type = modalData.type || null;
+    if(!modalData.title) {
+      console.log("必须含有标题");
+      return;
+    }else {
+      this.title = modalData.title;
+      this.content = modalData.content;
+      this.tip = modalData.tip;
+      if(modalData.cancel && typeof modalData.cancel !== "function") {
+        console.log("concel必须是方法");
+        return;
+      }else {
+        this.cancel = modalData.cancel || null;
+      }
+
+      if(modalData.confirm && typeof modalData.confirm !== "function") {
+        console.log("confirm必须是方法");
+        return;
+      }else {
+        this.confirm = modalData.confirm || null;     
+      }
+      this.$apply();
+    }
+  }
+
+  hideModal () {
+    this.modalShow = false;
+    this.maskShow = false;
+  }
+
+  onLoad () {
+
+  }
+}
+</script>
+
+
