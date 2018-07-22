@@ -1,10 +1,14 @@
 {
   "name": "wepy-dialog",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "a package for wepy",
-  "main": "index.js",
+  "main": "dialog.wpy",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:forMine/wepy-dialog.git"
   },
   "keywords": [
     "wepy",
@@ -13,5 +17,13 @@
     "插件"
   ],
   "author": "lstrive",
-  "license": "ISC"
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/forMine/wepy-dialog/issues"
+  },
+  "homepage": "https://github.com/forMine/wepy-dialog"
 }
+
+
+ 
+  

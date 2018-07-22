@@ -79,6 +79,14 @@
   text-align: left;
   margin-top: 14rpx;
 }
+.mask {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,.5);
+}
 </style>
 
 <template lang="pug">
@@ -109,7 +117,7 @@
 }
  */
 import wepy from "wepy";
-export default class Modal extends wepy.component {
+export default class Dialog extends wepy.component {
   data = {
     modalShow: false,
     title: "这是一个modal",

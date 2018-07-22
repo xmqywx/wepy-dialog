@@ -1,13 +1,28 @@
 ###wepy弹框插件
 --------
+####安装方法
+	npm install wepy-dialog --save
+	
+1.需要配置pug模板引擎
+	
+	cnpm install wepy-compiler-pug --save
+	
+	//wepy.config.js
+	compiler: {
+		pug: {
+	      data: {
+	        CONTENT_PATH: '/'
+      }
+    },
+	}
 ####使用方法
 import Dialog from "wepy-dialog";
 
 +	调用showModal方法
 
 	```
-	Dialog.showModal({
-	    title: "这是一个modal",//可自定义
+	this.$invoke("Dialog", "showModal", {
+		 title: "这是一个modal",//可自定义,必须
 	    content: "这里是modal的主体内容",//可自定义
 	    cancel: function() {...}
 	    confirm: function() {...}
